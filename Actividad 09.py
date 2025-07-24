@@ -58,7 +58,10 @@ def mostrarClientes():
         total = contarDestinos(destinosTotales)
         print(f"\nTotal de destinos registrados: {total}")
 
-        mayor = masDestinos()
+        listaClientes = list(clientes.values())
+        listaCodigos = list(clientes.keys())
+
+        mayor = masDestinos(listaClientes, listaCodigos)
         if mayor:
             print(f"Cliente con más destinos: {mayor[1]} (Código: {mayor[0]}) con {mayor[2]} destinos")
     else:
@@ -69,15 +72,16 @@ def contarDestinos(lista, cont = 0):
         return 0
     return len(lista[cont]) + contarDestinos(lista, cont + 1)
 
-def masDestinos():
-    maximo = -1
-    cliente = None
-    for clave, dato in clientes.items():
-        cantidad = len(dato["destinos"])
-        if cantidad > maximo:
-            maximo = cantidad
-            cliente = (clave, dato["nombre"], cantidad)
-    return cliente
+def masDestinos(lista, codigo, cont = 0, mayor = None):
+    if cont == len(lista):
+        return mayor
+
+    destinos_actual = len(lista[cont]["destinos"])
+    if mayor is None or destinos_actual > mayor[2]:
+        mejor = (codigo[cont], lista[cont]["nombre"], destinos_actual)
+
+    return masDestinos(lista, codigo, cont + 1, mayor)
+
 
 def main():
     while True:
