@@ -78,7 +78,7 @@ def masDestinos(lista, codigo, cont = 0, mayor = None):
 
     destinos_actual = len(lista[cont]["destinos"])
     if mayor is None or destinos_actual > mayor[2]:
-        mejor = (codigo[cont], lista[cont]["nombre"], destinos_actual)
+        mayor = (codigo[cont], lista[cont]["nombre"], destinos_actual)
 
     return masDestinos(lista, codigo, cont + 1, mayor)
 
