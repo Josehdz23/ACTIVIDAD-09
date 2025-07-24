@@ -47,14 +47,38 @@ def agregarClientes():
         print(f"Ocurrió un error: {ex}")
 
 def mostrarClientes():
-    for clave, dato in clientes.items():
-        h = 0
-        print(f"\nCodigo: {clave}, Nombre: {dato['nombre']}")
-        for dato2 in dato["destinos"]:
-            print(f"Destino {h + 1}: {dato2}")
-            h = h + 1
+    if clientes:
+        for clave, dato in clientes.items():
+            h = 0
+            print(f"\nCodigo: {clave}, Nombre: {dato['nombre']}")
+            for dato2 in dato["destinos"]:
+                print(f"Destino {h + 1}: {dato2}")
+                h = h + 1
+        destinosTotales = [dato["destinos"] for dato in clientes.values()]
+        total = contarDestinos(destinosTotales)
+        print(f"\nTotal de destinos registrados: {total}")
 
-def
+        mayor = masDestinos()
+        if mayor:
+            print(f"Cliente con más destinos: {mayor[1]} (Código: {mayor[0]}) con {mayor[2]} destinos")
+    else:
+        print("\nNo hay clientes en la lista")
+
+def contarDestinos(lista, cont = 0):
+    if cont == len(lista):
+        return 0
+    return len(lista[cont]) + contarDestinos(lista, cont + 1)
+
+def masDestinos():
+    maximo = -1
+    cliente = None
+    for clave, dato in clientes.items():
+        cantidad = len(dato["destinos"])
+        if cantidad > maximo:
+            maximo = cantidad
+            cliente = (clave, dato["nombre"], cantidad)
+    return cliente
+
 def main():
     while True:
         menu()
